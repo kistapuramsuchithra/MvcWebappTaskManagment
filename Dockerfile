@@ -5,9 +5,9 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore
+RUN dotnet restore MVCTaskManagmentApp.csproj
 
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish MVCTaskManagmentApp.csproj -c Release -o /app/publish --no-restore
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
