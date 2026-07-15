@@ -36,10 +36,16 @@ namespace MVCTaskManagmentApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            var users = _context.Users.ToList();
 
-            var user = _context.Users.FirstOrDefault(x =>
+            Console.WriteLine($"Users Count = {users.Count}");
+
+            foreach (var u in users)
+            {
+                Console.WriteLine($"{u.Id} {u.Username}");
+            }
+
+            var user = users.FirstOrDefault(x =>
                 x.Username == model.Username &&
                 x.Password == model.Password);
 
@@ -56,7 +62,7 @@ namespace MVCTaskManagmentApp.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear();
+            //HttpContext.Session.Clear();
 
             return RedirectToAction("Login");
         }
